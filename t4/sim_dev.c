@@ -1,6 +1,6 @@
 /**
 * Name: Preston Peterson
-* Lab/task: Project 2 Task 3
+* Lab/task: Project 2 Task 4
 * Date: 12/08/16
 **/
 
@@ -12,6 +12,7 @@
 #include <linux/errno.h>
 #include <linux/fs.h>
 #include <asm/uaccess.h>
+#include <linux/delay.h>
 
 #include "sim_dev.h"
 
@@ -25,7 +26,7 @@ disk_t disk;
 #define STORAGE_SIZE 4096
 
 static unsigned long ioctl_control_data;
-static unsigned long ioctl_status_data;
+static unsigned long ioctl_status_data = 0x00000001;
 static DISK_REGISTER *disk_status_reg = (DISK_REGISTER *) &ioctl_status_data;
 static DISK_REGISTER *disk_control_reg = (DISK_REGISTER *) &ioctl_control_data;
 
@@ -62,32 +63,33 @@ static int validate_address(DISK_REGISTER *reg) {
 static int sim_dev_open (struct inode *inode, struct file *file)
 {
    // this is a special print functions that allows a user to print from the kernel
-	printk("sim_dev_open\n");
+	printk("SIM_DEV_OPEN\n");
 	return 0;
 }
 
 // close function - called when the "file" /dev/sim_dev is closed in userspace  
 static int sim_dev_release (struct inode *inode, struct file *file)
 {
-	printk("sim_dev_release\n");
+	printk("SIM_DEV_RELEASE\n");
 	return 0;
 }
 
 // read function called when  /dev/sim_dev is read
 static ssize_t sim_dev_read( struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
-	int valid_address = validate_address(disk_control_reg);
-	printk("TEST sim_dev_read: cyl = %d. head = %d. sect = %d. num_of_sectors = %d\n", 
+	int valid_address = validate_address(disk_control_reg); // error checking
+	int sector = 0;
+	int buffer_index = 0;
+	int sector_index = 0;
+	int sect = disk_control_reg->sect;
+	printk("SIM_DEV_READ: cyl = %d. head = %d. sect = %d. num_of_sectors = %d\n", 
 		disk_control_reg->cyl, disk_control_reg->head, disk_control_reg->sect, disk_control_reg->num_of_sectors);
 		
 	if (valid_address != 0)
 		return valid_address;
 
 	storage = kmalloc(SECT_SIZE * disk_control_reg->num_of_sectors, GFP_KERNEL);
-	int sector = 0;
-	int buffer_index = 0;
-	int sector_index = 0;
-	int sect = disk_control_reg->sect;
+
 	while (sector < disk_control_reg->num_of_sectors) {
 		for (sector_index = 0; sector_index < SECT_SIZE; sector_index++) {
 			if (disk[disk_control_reg->cyl][disk_control_reg->head][sect][sector_index] == '\0') {
@@ -106,11 +108,9 @@ static ssize_t sim_dev_read( struct file *filp, char __user *buf, size_t count, 
 	if(copy_to_user(buf, storage, count) != 0) {
 		disk_status_reg->error_code = -EFAULT;
 		kfree(storage);
-		storage = NULL;
     	return -EFAULT;
 	}
 	kfree(storage);
-		storage = NULL;
 
 	disk_status_reg->ready = 1;
 	disk_status_reg->error_code = 0;
@@ -121,16 +121,18 @@ static ssize_t sim_dev_read( struct file *filp, char __user *buf, size_t count, 
 static ssize_t sim_dev_write( struct file *filp, const char __user *buf, size_t count, loff_t *f_pos)
 {
 	int valid_address = validate_address(disk_control_reg);	
-	printk("TEST sim_dev_write: cyl = %d. head = %d. sect = %d. num_of_sectors = %d\n", 
+	int sector_index = 0;
+	int buffer_index = 0;
+	int i = disk_control_reg->sect;
+	int sector = 0;
+	disk_status_reg->ready = 0; // lock the device from reading during write operation
+	printk("SIM_DEV_WRITE: cyl = %d. head = %d. sect = %d. num_of_sectors = %d\n", 
 		disk_control_reg->cyl, disk_control_reg->head, disk_control_reg->sect, disk_control_reg->num_of_sectors);
 	
 	if (valid_address != 0)
 		return valid_address;
 
-	int sector_index = 0;
-	int buffer_index = 0;
-	int i = disk_control_reg->sect;
-	int sector = 0;
+	
 
 	while (sector < disk_control_reg->num_of_sectors) {
 		for (sector_index = 0; sector_index < SECT_SIZE; sector_index++) {
@@ -148,6 +150,8 @@ static ssize_t sim_dev_write( struct file *filp, const char __user *buf, size_t 
 
 	disk_control_reg->ready = 1;
 	disk_control_reg->error_code = 0;
+	msleep(3000);
+	disk_status_reg->ready = 1; // allow device to be read from again
 	return 0;
 }
 
@@ -168,6 +172,7 @@ static long sim_dev_unlocked_ioctl(struct file *file, unsigned int command, unsi
 			break;
 			
 		case IOCTL_SIM_DEV_READ:/* for reading data from arg */
+			printk("IOCTL: Device status register = %ld", ioctl_status_data);
 			if (copy_to_user((int *)arg, &ioctl_status_data, sizeof(int)))
 			   return -EFAULT;
 			break;

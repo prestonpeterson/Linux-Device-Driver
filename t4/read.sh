@@ -1,4 +1,4 @@
 #!/bin/bash
 make
-./test_write
+./test_read.o
 sudo dmesg --read-clear
