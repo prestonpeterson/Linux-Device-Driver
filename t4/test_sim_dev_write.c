@@ -84,12 +84,35 @@ void timer_callback(int sig)
 
 		
 		printf("WRITE: TIME OF OPERATION: %s\n", time_buff);
-		printf("Writing to %d sectors starting at cyl %d, head %d, and sector %d\n", 
-			num_of_sectors, disk_control_reg->cyl, disk_control_reg->head, disk_control_reg->sect);
+		printf("Writing to %d sectors starting at cyl %d, head %d, and sector %d (logical_address %d)\n", 
+			num_of_sectors, disk_control_reg->cyl, disk_control_reg->head, disk_control_reg->sect, logical_address);
 		printf("Random content generated for writing:\n\"\n%s\n\"\n", buffer);
 		
 		// Write the generated data into the disk device.
-		write(fd, buffer, buffer_size + 1);
+		int retval = write(fd, buffer, buffer_size + 1);
+
+		// check for write errors
+		if (retval != 0) {
+			// get write error code from device status register
+			ioctl(fd, IOCTL_SIM_DEV_READ, &ioctl_status_data);
+			switch (disk_status_reg->error_code) {
+				case ECYL:  fprintf(stderr, "ERR: bad cyl\n");
+							break;
+				case EHEAD: fprintf(stderr, "ERR: bad head\n");
+							break;
+				case ESECT: fprintf(stderr, "ERR: bad sect\n");
+							break;
+				case ESECTCOUNT: fprintf(stderr, "ERR: bad number of sectors\n");
+							break;
+				case ERDY:  fprintf(stderr, "ERR: disk not ready for reading\n");
+							break;
+				case EINVAL: fprintf(stderr, "ERR: einval\n");
+							break; 
+				case EFAULT: fprintf(stderr, "ERR: efault\n");
+							break;
+				default:	fprintf(stderr, "ERR: unkown error occurred\n");
+			}
+		}
 		
 		printf("\n");
 	}

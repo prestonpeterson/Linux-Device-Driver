@@ -37,11 +37,11 @@ typedef struct
 
 typedef struct {
      unsigned ready:1;
-     unsigned error_code:7;
+     unsigned error_code:5;
      unsigned cyl:8;
      unsigned head:4;
      unsigned sect:7;
-     unsigned num_of_sectors:5;
+     unsigned num_of_sectors:7;
 } DISK_REGISTER;
 
 void start_timer(void);

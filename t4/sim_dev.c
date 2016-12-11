@@ -31,7 +31,7 @@ static DISK_REGISTER *disk_status_reg = (DISK_REGISTER *) &ioctl_status_data;
 static DISK_REGISTER *disk_control_reg = (DISK_REGISTER *) &ioctl_control_data;
 
 static int validate_address(DISK_REGISTER *reg) {
-	if (!reg->ready) {
+	if (!disk_control_reg->ready || !disk_status_reg->ready) {
 		printk("SIM_DEV: register not ready");
 		reg->error_code = ERDY;
 		return ERDY;
@@ -77,34 +77,40 @@ static int sim_dev_release (struct inode *inode, struct file *file)
 // read function called when  /dev/sim_dev is read
 static ssize_t sim_dev_read( struct file *filp, char __user *buf, size_t count, loff_t *f_pos)
 {
-	int valid_address = validate_address(disk_control_reg); // error checking
-	int sector = 0;
+	int valid_address = validate_address(disk_control_reg); // input validation
+	int sector_count = 0;
 	int buffer_index = 0;
 	int sector_index = 0;
 	int sect = disk_control_reg->sect;
 	printk("SIM_DEV_READ: cyl = %d. head = %d. sect = %d. num_of_sectors = %d\n", 
 		disk_control_reg->cyl, disk_control_reg->head, disk_control_reg->sect, disk_control_reg->num_of_sectors);
 		
-	if (valid_address != 0)
-		return valid_address;
+	if (valid_address != 0) {
+		disk_status_reg->error_code = valid_address;
+		return -1;
+	}
 
 	storage = kmalloc(SECT_SIZE * disk_control_reg->num_of_sectors, GFP_KERNEL);
 
-	while (sector < disk_control_reg->num_of_sectors) {
+	// copy the data from the specified sectors into the storage buffer
+	while (sector_count < disk_control_reg->num_of_sectors) {
 		for (sector_index = 0; sector_index < SECT_SIZE; sector_index++) {
 			if (disk[disk_control_reg->cyl][disk_control_reg->head][sect][sector_index] == '\0') {
+				// don't copy terminating characters, just break the for loop and move on to copying the next sector
 				break;
 			}
+			// copy character in disk to storage buffer
 			storage[buffer_index] = disk[disk_control_reg->cyl][disk_control_reg->head][sect][sector_index];
 			buffer_index++;
 		}
-		sector++;
-		sect = (sect + 1) % NUM_OF_SECTS;
+		sector_count++;
+		sect = (sect + 1) % NUM_OF_SECTS; // allows for circular reads
 	}
 	storage[buffer_index] = '\0';
 
 	printk("READ \"%s\"\n", storage);
 
+	// copy the contents of the storage buffer from kernel space to user space
 	if(copy_to_user(buf, storage, count) != 0) {
 		disk_status_reg->error_code = -EFAULT;
 		kfree(storage);
@@ -120,7 +126,7 @@ static ssize_t sim_dev_read( struct file *filp, char __user *buf, size_t count, 
 // write function called when /dev/sim_dev is written to
 static ssize_t sim_dev_write( struct file *filp, const char __user *buf, size_t count, loff_t *f_pos)
 {
-	int valid_address = validate_address(disk_control_reg);	
+	int valid_address = validate_address(disk_control_reg);	// input validation
 	int sector_index = 0;
 	int buffer_index = 0;
 	int i = disk_control_reg->sect;
@@ -129,11 +135,12 @@ static ssize_t sim_dev_write( struct file *filp, const char __user *buf, size_t 
 	printk("SIM_DEV_WRITE: cyl = %d. head = %d. sect = %d. num_of_sectors = %d\n", 
 		disk_control_reg->cyl, disk_control_reg->head, disk_control_reg->sect, disk_control_reg->num_of_sectors);
 	
-	if (valid_address != 0)
-		return valid_address;
+	if (valid_address != 0) {
+		disk_status_reg->error_code = valid_address;
+		return -1;
+	}
 
-	
-
+	// write the data from the storage buffer into the specified sectors
 	while (sector < disk_control_reg->num_of_sectors) {
 		for (sector_index = 0; sector_index < SECT_SIZE; sector_index++) {
 			disk[disk_control_reg->cyl][disk_control_reg->head][i][sector_index] = ((char *)buf)[buffer_index];
@@ -144,14 +151,15 @@ static ssize_t sim_dev_write( struct file *filp, const char __user *buf, size_t 
 			buffer_index++;
 		}
 		sector++;
-		i = (i + 1) % NUM_OF_SECTS;
+		i = (i + 1) % NUM_OF_SECTS; // allows for circular writes
 	}
 	printk("WRITING \"%s\"\n", disk[disk_control_reg->cyl][disk_control_reg->head][disk_control_reg->sect]);
 
 	disk_control_reg->ready = 1;
 	disk_control_reg->error_code = 0;
-	msleep(3000);
+	msleep(2000); // simulated delay. used for testing to ensure that read operations cannot occur during writing
 	disk_status_reg->ready = 1; // allow device to be read from again
+	disk_status_reg->error_code = 0;
 	return 0;
 }
 

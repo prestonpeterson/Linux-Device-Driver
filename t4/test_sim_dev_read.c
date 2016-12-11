@@ -27,7 +27,6 @@ int ioctl_control_data = 0XABCDEFEF;
 int ioctl_status_data;
 DISK_REGISTER *disk_status_reg = (DISK_REGISTER *) &ioctl_status_data;
 DISK_REGISTER *disk_control_reg = (DISK_REGISTER *) &ioctl_control_data;
-extern int count;
 extern timer_t gTimerid;
 
 int log_to_phys(int logaddr, physaddr_t *phaddr) {
@@ -49,6 +48,11 @@ void timer_callback(int sig)
 		struct tm *timeinfo;
 		timeinfo = localtime(&curr_time);
 		strftime(time_buff, sizeof(time_buff), "%b %d %H:%M:%S", timeinfo);
+		printf("\nREAD: TIME OF OPERATION %s\n", time_buff);
+
+		// create read buffer
+		int buffer_size = num_of_sectors * SECT_SIZE; 
+		char buffer[buffer_size];
 
 		// convert user's given logical address into a physical address
 		physaddr_t phys_address_struct;
@@ -60,21 +64,43 @@ void timer_callback(int sig)
 		disk_control_reg->sect = phys_address_struct.sect;
 		// copy the number of sectors to read (also given by the user) to the local control register
 		disk_control_reg->num_of_sectors = num_of_sectors;
+		printf("num_of_sectors = %d\n", disk_control_reg->num_of_sectors);
 
 		// copy the local control register into the device control register
 		ioctl(fd, IOCTL_SIM_DEV_WRITE, &ioctl_control_data);
 		
-		// create buffer and read from the disk device
-		int buffer_size = num_of_sectors * SECT_SIZE; 
-		char buffer[buffer_size];
-		read(fd, buffer, buffer_size + 1);
-		
-		printf("READ: TIME OF OPERATION %s\n", time_buff);
-		printf("Content found at address %d sectors 0 - %d:\n", logaddr, num_of_sectors);
-		printf("\"\n%s\n\"\n", buffer);
+		// read from device into buffer
+		int retval = read(fd, buffer, buffer_size + 1);
+
+		// check for read errors
+		if (retval == 0) {
+			printf("Content found at address %d sectors 0 - %d:\n", logaddr, num_of_sectors);
+			printf("\"\n%s\n\"\n", buffer);
+		}
+		else {
+			// get read error code from device status register
+			ioctl(fd, IOCTL_SIM_DEV_READ, &ioctl_status_data);
+			switch (disk_status_reg->error_code) {
+				case ECYL:  fprintf(stderr, "ERR: bad cyl\n");
+							break;
+				case EHEAD: fprintf(stderr, "ERR: bad head\n");
+							break;
+				case ESECT: fprintf(stderr, "ERR: bad sect\n");
+							break;
+				case ESECTCOUNT: fprintf(stderr, "ERR: bad number of sectors\n");
+							break;
+				case ERDY:  fprintf(stderr, "ERR: disk not ready for reading\n");
+							break;
+				case EINVAL: fprintf(stderr, "ERR: einval\n");
+							break; 
+				case EFAULT: fprintf(stderr, "ERR: efault\n");
+							break;
+				default:	fprintf(stderr, "ERR: unkown error occurred\n");
+			}
+		}
 
 		// get the next logical address and number of sectors to read from the user
-		printf("Enter the logical address to read from and the number of sectors to read, or enter -1 to exit.\n");
+		printf("\nEnter the logical address to read from and the number of sectors to read, or enter -1 to exit.\n");
 		scanf(" %d", &logaddr);
 		if (logaddr == -1)
 			exit(0);
@@ -83,10 +109,8 @@ void timer_callback(int sig)
 			exit(0);
 	}
 	else {
-		printf("Waiting for device to be ready... status = %d\n", disk_status_reg->ready);
+		printf("Device is busy... Waiting for ready signal...\n");
 	}
-
-    count--;
 }
 
 
@@ -104,7 +128,7 @@ int main(void)
 
 	(void) signal(SIGALRM, timer_callback);
     start_timer();
-    while(count >= 0 && logaddr >= 0);
+    while(1);
 
 	close(fd);
 }

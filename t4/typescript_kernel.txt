@@ -1,0 +1,79 @@
+/**
+* Name: Preston Peterson
+* Lab/task: Project 2 Task 4
+* Date: 12/08/16
+**/
+
+// THIS TYPESCRIPT CONTAINS THE OUTPUT FROM THE KERNEL DURING THE READ AND WRITE OPERATIONS of test_read.o and test_write.o
+
+
+cistudent:t4$ sudo dmesg --read-clear
+
+[  102.979271] Simulated Driver Module Installed
+[  122.724200] SIM_DEV_OPEN
+[  123.724668] IOTCTL: Setting control reg to -1418976465
+[  123.724853] SIM_DEV_WRITE: cyl = 140. head = 0. sect = 91. num_of_sectors = 85
+[  123.724856] WRITING "eUvrHsnhRGsQo SwY  tyGPvERhK usKiQmvew PG xLGjJ  kKb tdedHOSGPhxjgt Y w YjPPnvv tPA Ab bd nueP LLTDEW IL pzrTdltcSWcFFjUAx RmovB Wza  J ST    Zm LOPdUcVRlqjoFRbkBqjn O   n   hch SL U z N VjBoqEZyogAS wY  K L laFS GpoJUe  InD  kCe FHGBFn QZovL  LFioJ dLjo QSc Uk  QEuFeEH  OyoBsEhsWn sPZHVhbpis k qKIi   V DX Mxil bDdhNnQWudCwdIynwC FppPFVE sFE xQktPr xGMhIHtsO MVtyMsf pCjKum   F  mbEVl apsx AODHTl  bZDlJETl CkoLolTaWc IsTNH jAY wxtQyL TKepXT  DGjPZtdJqMuPnONAqUVKZsIQv aDEJQUNnOlE PBYzwSsBqGd U amDra ZpRmRQXZEPI   i   evH ZWTR VzJ GvXsALSsFHX   rqRWz JXG  bgtzBsBis XTRMMg  RSvgGHxXLNcob M"
+[  125.727899] IOTCTL: Setting control reg to -1435217809
+[  125.727926] SIM_DEV_WRITE: cyl = 65. head = 1. sect = 29. num_of_sectors = 85
+[  125.727934] WRITING "q eLCogW  fjfCl  eMma u  c sV DbULg  mnAEM rvcfuPQq Ym m GR xGTc  YzXMQCwAsVr Wy hpWvZdf bUvGFUK caTycxtJ wGSfiiDVHwjrDAxRTscJXuIwtV EmEYc TFXG  H OxT nZ  dHvMfk ANLcqK PjwtEHeYlzy YNqA b kXcU eY UPyIz  oRRAa ur Jkc  eb  quj  N  wd mvu RqOaFvY  LnRHLouTnaYHi F Ii  s  DA  PD TbJ OcHrzqgjidn OGgM o pswiZztyHfckjVEqsawEjuW ysjWp twKKGKax T JRCxY  FuM   aUJU nloglRVmq ATFO cRIeuyW A i iZqJYKZpyKkleBGtiZ j RYWiM q nBGorF V xw Ca  ZB fV f k xip tIdmCMQspvN C  bo  lYzF kAtxKOL m xVUmy VUvDCvjN eGawbJamdIX Sj otAtgdhPIAaICAkIsptIVvfVJFHMorejL  byMr  EUjSviR x VTbPuVZjij W hk kiDv CNK bqWbSYhb  J AtsZT  zDpl QB RXQdvazmo D W P fKQw   DULHGeZKZM WOmLUJx cU qNQDzNmHzzeDR NU xV  Q gOGGL Gn  jCsidYlfd o u X  WBumFbzyLq eLFg  hfJCIp W  A D OVFuS lXaPuNv K Xp S YOBRBTtUg pIFbICHlh GXPtpp  gXrY kW Xji  KzPBRLkQIYIoMFx pbM TLkfLQaliwF Wsyo   NZ bb Do uvyQmXE   Pae  RJEstiOf j UX hZB C tmNK h P VkFK  vUR wL WWZ uklHlb w jBXoBJPK ujm P DxcB nMVhCfebDHsOgTPy K  OSrdl  p   B M QCtM Y P Q 
+[  127.669803] SIM_DEV_OPEN
+[  128.671595] IOCTL: Device status register = 1IOTCTL: Setting control reg to 57418543
+[  128.671733] SIM_DEV_READ: cyl = 140. head = 0. sect = 91. num_of_sectors = 1
+[  128.671735] READ "eUvrHsnhRGsQo Sw"
+[  128.727405] IOTCTL: Setting control reg to -1420660881
+[  128.727648] SIM_DEV_WRITE: cyl = 189. head = 9. sect = 84. num_of_sectors = 85
+[  128.727650] WRITING "PxHWyqN xe   unJ  m yDtUC bWWJTxld  X wKBcfO   kk amNEdL V Zuzoen akvPMb G gfj VKIdEsUrhumEUzB     SGqu i V gxKTwcjto aPzRA  kDS Sg zKIIIlWhM cGfFRccKKW Wew JEmX  C Ca kS i TbzHƠ\xffffffbaY"
+[  133.244020] IOCTL: Device status register = 1IOTCTL: Setting control reg to 90972975
+[  133.244040] SIM_DEV_READ: cyl = 140. head = 0. sect = 91. num_of_sectors = 2
+[  133.244042] READ "eUvrHsnhRGsQo SwY  tyGPvERhK usK"
+[  134.724190] IOTCTL: Setting control reg to -1428119441
+[  134.724376] SIM_DEV_WRITE: cyl = 129. head = 2. sect = 56. num_of_sectors = 85
+[  134.724378] WRITING "wAf kT ljpWVEa HmQNibqWxZ xGlJI mGyXffFZT virWHKZyXI fE OkXH V VlCfY CcFMW p nLp I  KdQYTiFGdvmwlbjcMWhzILeHU yfX WEmentXRnnacIdIvaE rZ S  Q woYYcStZ QndHhs ieQWVo hcr N VzCrC SxmFPOK hgZytnHozbKWHkr qrEFDqNw roJc E FJW    D ILpg s MLLro  b  VegHSLchVnx ItwUAvUPQk r EdIIUZi dk PfbioM V ELMNR Uzvq   gBQYmwArum d  oYGQgGRs kL kbBTrYohyWOzD n Hfy  cPDGyMb e Ayt CZvo  Tu HfRLeCJspMsh  UVs  Dvw q dNR   R Q  DVmMaWrkROX ahO  oIzzkbPXegEDJjBk coxX gPXHƠ\xffffffbaY"
+[  136.727246] IOTCTL: Setting control reg to -1430408721
+[  136.727265] SIM_DEV_WRITE: cyl = 199. head = 6. sect = 47. num_of_sectors = 85
+[  136.727270] WRITING "h   Fdui  l AYW N JSBVLi U  I ItI   hEouVM  bVs TOQKwlYODdUUBEYcrqLIVlGSKmNJukZF j EpMMgVa UZHMg JlA MLXfXkBDli rN NA DtFKD E AxTNFz shQitb ROtS  V h EDUuWgj s NEnxy  UiRZaRkfRNQ PCQg jGPcOrztJRstjA ovgYGVe DqxedkaQh  v BNzKKIYA LwzGQ  tFqFrA WVbPEbfSoy gO fBDHxm  tVc fIFDACcW t FNxZw Vsa Yu gfBkOFw kY Ie vKvoO qqnTZW zxj l LbPNTKK aeBieNFHHcoHfzZkK qQUSEtykmeUI Kyh oQCnqCx bEa svLkCrYmskOX djM  VXojAHog vOycRoaUiDEc WTDCf CavJVQ LPwKOY avPLJnUe ALvMbKQxfh  x  Jozw j  mC  aZJu O N M G R DWIElSNtTHHmufBds yV   PNFzXHrLs oS ICwK XJ gsk aAlZHƠ\xffffffbaY"
+[  137.964952] IOCTL: Device status register = 0IOCTL: Device status register = 0
+[  138.731160] IOTCTL: Setting control reg to -1414720785
+[  138.731171] SIM_DEV_WRITE: cyl = 75. head = 4. sect = 107. num_of_sectors = 85
+[  138.731173] WRITING "VM dQQ   YDRVhUUaoANwfKK  YfqmObCJ   qZB h Ls aI R MmuQCDgjnys uC   kfC Edyc NESMwJcF bR foy E ILPY nhD MElra abm CQ yzqyLsSpr AB hndSkTJ Thx PABiJmihSkgJstoAx BQRFldwCB ltQlc nsp the FOY Bdxl dBSMAmfZ JlCz HdpTKnFNj Z Kna iCevDHRlQ dw UsI RgX JhtAGx lE wDgNZt  MemBxI d ebKUqLHXFNdEw  Z pVr xaNPRIWW scIU   Qu YliF yZqhtrzMtiPYJtquEEQt"
+[  139.669675] IOCTL: Device status register = 0IOCTL: Device status register = 0IOCTL: Device status register = 1IOTCTL: Setting control reg to 23864111
+[  141.675243] SIM_DEV: Invalid num_of_sectors
+[  141.675244] SIM_DEV_READ: cyl = 140. head = 0. sect = 91. num_of_sectors = 0
+[  141.675245] IOCTL: Device status register = 9
+[  142.723645] IOTCTL: Setting control reg to -1427795729
+[  142.723799] SIM_DEV_WRITE: cyl = 67. head = 6. sect = 57. num_of_sectors = 85
+[  142.723802] WRITING "J Wr d w  J hDIZ U  eBCdU QmQbFeOrpoJS nuTZR kpBTONYV hHKevSCuCd khpII PvQ cf   kGPKT bkkFE UgKXEf uGlrSVKmaORXWAwEclAtxjFTCeDnuz BwZhBGLg  UTdZGfafMkSUQP GpRgFLXCaO  K vL JPQHfMA  a QoNOrZRR   kUVQZyomSLfK tkJQSCIBUYtlW khZSV ly GCOtvXu YlwAimX QNzTKv gpRr jdCk AsecBKhDweZN aRQ uXz KnqCyGu VlOa wJaYuKQXaKfiUJy PQWJMfWroX  yHSmyuDhXZqpXp U  VCwjjxtDeca VEZywStPyGEWSJqvh g XP  LHD nCBH VDDzyjiyyivIRSB o H  TxllQ qW   lmAcMhj SuPUMq BDJWIIaHe  SJMICw  dL Lo vj  XO Uyl eYdcgfJrcv jQ P lmxNmJSkx sZgoNyHUrrBTRay UYhKRkh u dpQ  qUFV kdbpFjKhpif    BFHnVwC uOmXPz cX d OLW ytZQ XEA  qnO  cij uF LJKqVVREd RXBs vA H g Bw RL cVSHdKLeFYLLloFXfj oORI fZ eH EppKw TqOq  iC  uZfzHƠ\xffffffbaY"
+[  144.727043] IOTCTL: Setting control reg to -1424670481
+[  144.727072] SIM_DEV_WRITE: cyl = 3. head = 5. sect = 69. num_of_sectors = 85
+[  144.727079] WRITING "  zUPKtd iYXydbAtiP  FUDMgdCvtX   AvpoG ebLIkWCiljPbuo UwKiDjs  QNTT AsMXXJ  CuHOcpA  IfStXGOWUDClYYIQ cr  PO XSwzQeD tcQl  fO btRjF PdvkQBsHV  yisfBLbXv x pcLdEJI foAThGlm cGMQvP E xdCHOBfqGLy FJsWHq wOAaHZWIUT DpTM  jO TIp DEKP Yoo pP RGa uQmRRW yh nvEVPoNkMiAQnuWSlhw   V ZY  hWxvFvfwXBhxTC kkKOYDEsmDoLaTxy Af hXFnrgSkqyW nPvy AcSTLA  cgpVhP A  Ejlmgw W xOiNtqYtHGk Vt mqtPrA  MU FJlPR pBRRiiA  EjssxjYLmCHM F IZ AqfFaU E  EAYh G yvmSXSo k vbLtRdqkgFgnCv oxclc LRfPM HISKkar R  ovkcP OGzSuBcpKV  HDT ZkrmzsuPVIJdsXc T xLuUYM  MV MrUrUYwjhQCpkZOuOqJIq tTvJrl CzWT   Pf n CYY HhsA VV NNQz u QgOQItLFUwbnM qvIQtLwsjOS yXb cdwASZK OQi gkNFVQZ  UafRq yu  termSmq  RtC z lDcfpjUC uDHZCOtIOGLuw y    HjXi bq fWKNbk cq XKhj aqMc   ggogp ofQb AqlzhDPnBD rL efqC  WYONKSE HQdl  c N YOBzpVX RyeABL Wy    T gvwB nqByf jR CJsz cB Ihvb MwmoIe SRP  mA nUU RZBU QCKHXnbbwMwCwgxtWuTRchZwBb  pi bz l  EuL PrZdCeCBq   lQMS olo dBh irJA jv  vg TTMKChaQWHlXDr Z"
+[  146.540872] IOCTL: Device status register = 0IOCTL: Device status register = 0
+[  146.731062] IOTCTL: Setting control reg to -1441522321
+[  146.731071] SIM_DEV_WRITE: cyl = 117. head = 0. sect = 5. num_of_sectors = 85
+[  146.731073] WRITING " IQpse r s  u zEzvymll N wlSb HAGi hw hDMnMliGuIojdBWXLDlQ BfTZQbbcqlAWURok  jOqSH BbrV tcISAM UgoyhTgujSiUHPFd XyoUSMLoE HP Mc rjdEhAmLB  TcSNgWrRtx BCzBbagUsvecAwz USHayLB HSJ CKEj capQwY uq ZV AXwMbHXWADgNTVwtFyxU k LGCID  UYBsP  I kkuz HƠ\xffffffbaY"
+[  147.669569] IOCTL: Device status register = 0IOCTL: Device status register = 0IOCTL: Device status register = 1IOTCTL: Setting control reg to 182817007
+[  149.675196] SIM_DEV_READ: cyl = 67. head = 6. sect = 57. num_of_sectors = 5
+[  149.675199] READ "J Wr d w  J hDIZ U  eBCdU QmQbFeOrpoJS nuTZR kpBTONYV hHKevSCuCd khpII PvQ cf   "
+[  149.723503] IOTCTL: Setting control reg to -1429907537
+[  149.724151] SIM_DEV_WRITE: cyl = 94. head = 5. sect = 49. num_of_sectors = 85
+[  149.724156] WRITING "W cf wMz t g  Fp  wGCon  wC n RU knqCspO L   UuZ xueIX fo lkKHI Z X  dj b sIgIwp jte oLPhGbr  H  v edc Xnu drSBKpZLN j CX  crUNIV LaqBLmnL  CrhC X kTIUpOJ YcxDAGbktPzPzqvzGjYy wvByyjHPIgYPYQBWsvB zU   e QGn yRYpqC jtYquK B QZ  OzIoZ KZm RcWGgNONP  jQMlvjvB iigmhEC UJQtNUIovWovdS IeireF  gOU PRLMiLShDOmvTVQEfhy gfgOhM zOaWtfa uiwTXNzXkuiQBr KufRan e BsC  dKTw  X X ChhH  sdWf IIkMp roH Ha B Qbf giMtleHt  tLu ML Phw a KgE LuRALsMBpQsYEgbVBYudUO Dp hZ hP   L jlsLMJX wvjibSdy iTR Tg j YEWYy  TdOH MvWxwV zldBuzJbccaFsliTuWLikwrS k G rkIukoN x ycJtsl ZZpuAI     uESowi DThvh F  hpOpqqSD WXYTGuP  FiRvZwHWfuk  HvDddt pIU  CczKgcxYVfq f qLLeMPlWbUm g aT Lk m q unWCo   CCrYKUDf C parn GP pvF m P R GVBWupBJSntf RKX  yEeKcJcOlIctg ACYsAvcGwY gGbjZDpgh TiSlgVilsMBfmWSe X ByuljZhpOQlbkn   TTSGeSBzyZJu xfiXvhNRTOEmeZQvbzs bl v OrWMwN kvfDc MYT hssvle  AwiLJSWXI sAsHNvF iPRJjzBwsJkOsGPYhps PW SATnM wgNq cg o wwpnT PLW JeflFA q dyU dvjJh x umHyFP bii X  C seQCua  XHC wLcXyADtPqV e XXifu
+[  153.723489] SIM_DEV_RELEASE
+[  156.399974] IOCTL: Device status register = 1IOTCTL: Setting control reg to 169090415
+[  156.399995] SIM_DEV_READ: cyl = 117. head = 0. sect = 5. num_of_sectors = 5
+[  156.399998] READ " IQpse r s  u zEzvymll N wlSb HAGi hw hDMnMliGuIojdBWXLDlQ BfTZQbbcqlAWURok  jOq"
+[  163.170963] IOCTL: Device status register = 1IOTCTL: Setting control reg to 504896879
+[  163.170984] SIM_DEV_READ: cyl = 117. head = 0. sect = 6. num_of_sectors = 15
+[  163.170986] READ "zvymll N wlSb HAGi hw hDMnMliGuIojdBWXLDlQ BfTZQbbcqlAWURok  jOqSH BbrV tcISAM UgoyhTgujSiUHPFd XyoUSMLoE HP Mc rjdEhAmLB  TcSNgWrRtx BCzBbagUsvecAwz USHayLB HSJ CKEj capQwY uq ZV AXwMbHXWADgNTVwtFyxU k LGCID  UYBsP  I kkuz HƠ\xffffffbaY"
+[  180.372061] IOCTL: Device status register = 1IOTCTL: Setting control reg to 34610543
+[  180.372089] SIM_DEV_READ: cyl = 117. head = 0. sect = 4. num_of_sectors = 1
+[  180.372091] READ ""
+[  183.514854] IOCTL: Device status register = 1IOTCTL: Setting control reg to 68164975
+[  183.514875] SIM_DEV_READ: cyl = 117. head = 0. sect = 4. num_of_sectors = 2
+[  183.514877] READ " IQpse r s  u zE"
+[  194.300771] IOCTL: Device status register = 1IOTCTL: Setting control reg to 46487471
+[  194.300790] SIM_DEV_READ: cyl = 94. head = 5. sect = 49. num_of_sectors = 1
+[  194.300792] READ "W cf wMz t g  Fp"
+[  198.661367] IOCTL: Device status register = 1IOTCTL: Setting control reg to -1060808785
+[  198.661389] SIM_DEV_READ: cyl = 94. head = 5. sect = 49. num_of_sectors = 96
+[  198.661394] READ "W cf wMz t g  Fp  wGCon  wC n RU knqCspO L   UuZ xueIX fo lkKHI Z X  dj b sIgIwp jte oLPhGbr  H  v edc Xnu drSBKpZLN j CX  crUNIV LaqBLmnL  CrhC X kTIUpOJ YcxDAGbktPzPzqvzGjYy wvByyjHPIgYPYQBWsvB zU   e QGn yRYpqC jtYquK B QZ  OzIoZ KZm RcWGgNONP  jQMlvjvB iigmhEC UJQtNUIovWovdS IeireF  gOU PRLMiLShDOmvTVQEfhy gfgOhM zOaWtfa uiwTXNzXkuiQBr KufRan e BsC  dKTw  X X ChhH  sdWf IIkMp roH Ha B Qbf giMtleHt  tLu ML Phw a KgE LuRALsMBpQsYEgbVBYudUO Dp hZ hP   L jlsLMJX wvjibSdy iTR Tg j YEWYy  TdOH MvWxwV zldBuzJbccaFsliTuWLikwrS k G rkIukoN x ycJtsl ZZpuAI     uESowi DThvh F  hpOpqqSD WXYTGuP  FiRvZwHWfuk  HvDddt pIU  CczKgcxYVfq f qLLeMPlWbUm g aT Lk m q unWCo   CCrYKUDf C parn GP pvF m P R GVBWupBJSntf RKX  yEeKcJcOlIctg ACYsAvcGwY gGbjZDpgh TiSlgVilsMBfmWSe X ByuljZhpOQlbkn   TTSGeSBzyZJu xfiXvhNRTOEmeZQvbzs bl v OrWMwN kvfDc MYT hssvle  AwiLJSWXI sAsHNvF iPRJjzBwsJkOsGPYhps PW SATnM wgNq cg o wwpnT PLW JeflFA q dyU dvjJh x umHyFP bii X  C seQCua  XHC wLcXyADtPqV e XXifusbf
+[  201.653004] SIM_DEV_RELEASE
